@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\NewFolder1\NewFolder\**" />
     <Compile Remove="Views\NewFolder\**" />
-    <Content Remove="Views\NewFolder1\NewFolder\**" />
     <Content Remove="Views\NewFolder\**" />
-    <EmbeddedResource Remove="Views\NewFolder1\NewFolder\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
-    <None Remove="Views\NewFolder1\NewFolder\**" />
     <None Remove="Views\NewFolder\**" />
   </ItemGroup>
 
@@ -27,10 +23,6 @@
 
   <ItemGroup>
     <None Remove="Views\Home\htmlpage.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\NewFolder1\" />
   </ItemGroup>
 
 </Project>

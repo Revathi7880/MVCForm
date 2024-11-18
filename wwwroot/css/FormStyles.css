@@ -2,5 +2,27 @@
 }
 
 .mainDiv {
-    margin-top: 2rem;
+    margin: 1em 10% 1em 10%;
+    padding: 1em;
+    height: 35rem;
+    border-radius: 7px;
+    border: 1px solid black;
 }
+
+.nameTable {
+    width: 100%;
+}
+
+.nameTable td {
+    width: 33%;
+    padding: 0.5em;
+}
+
+.nameTable input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+
+

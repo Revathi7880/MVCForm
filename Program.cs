@@ -28,7 +28,7 @@ namespace dotNetProject
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=FormView}/{id?}");
+                pattern: "{controller=Form}/{action=FormView}/{id?}");
 
             app.Run();
         }
