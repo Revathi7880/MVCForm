@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace dotNetProject
 {
     public class Program
@@ -8,6 +10,9 @@ namespace dotNetProject
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            //Add service to Database
+            builder.Services.AddDbContext<DbContextDatabase>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
