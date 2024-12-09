@@ -1,45 +1,169 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model FormDataModal
 @{
     ViewData["Title"] = "Form";
 }
 
 <h1 style="text-align:center; padding-top: 0.5em;">USER CREATION</h1>
 <div class="mainDiv">
-    <form>
+    <form asp-controller="Form" asp-action="InsertUser" method="POST">
         <table class="nameTable">
             <thead>
+
+                <tr style="height: 1em;"></tr>
+                <tr><td class="sideHeading" colspan="3"><h4 style="margin-bottom: 0em;">Personal Information</h4></td></tr>
+                <tr style="height: 1em;"></tr>
+
                 <tr>
                     <td>
                         <label for="firstName" class="form-label">First Name</label>
-                        <input id="firstName" class="form-control">
+                        <input id="firstName" class="form-control" value="@Model.FirstName" name="FirstName" />
                     </td>
                     <td>
                         <label for="middleName" class="form-label">Middle Name</label>
-                        <input id="middleName" class="form-control">
+                        <input id="middleName" class="form-control" value="@Model.MiddleName" name="MiddleName" />
                     </td>
                     <td>
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input id="lastName" class="form-control">
+                        <input id="lastName" class="form-control" value="@Model.LastName" name="LastName" />
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         <label for="email" class="form-label">Email</label>
-                        <input id="email" type="email" placeholder="name@example.com" class="form-control">
+                        <input id="email" type="email" placeholder="name@example.com" class="form-control" value="@Model.Email" name="Email" />
                     </td>
                     <td>
-                        <label for="phone" class="form-label">Phone Number</label>
-                        <input id="phone" type="number" class="form-control" />
+                        <label for="phone" class="form-label">Contact Number</label>
+                        <input id="phone" class="form-control" placeholder="(xxx)-xxx-xxxx" value="@Model.Phone" name="Phone" />
                     </td>
+                    <td>
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input id="dob" type="date" class="form-control" value="@Model.DateOfBirth" name="DateOfBirth" />
+                    </td>
+                </tr>
+
+                <tr>
                     <td>
                         <label for="age" class="form-label">Age</label>
-                        <input id="age" type="number" class="form-control" />
+                        <input id="age" type="number" class="form-control" value="@Model.Age" name="Age" />
+                    </td>
+                    <td>
+                        <label for="nationality" class="form-label">Nationality</label>
+                        <input id="nationality" class="form-control" value="@Model.Nationality" name="Nationality" />
+                    </td>
+                    <td>
+                        <label for="occupation" class="form-label">Occupation</label>
+                        <input id="occupation" class="form-control" placeholder="Student, Software Develpoper, ..." value="@Model.Occupation" name="Occupation" />
                     </td>
                 </tr>
             </thead>
+            <tbody>
+                <tr style="height: 1em;"></tr>
+                <tr><td class="sideHeading" colspan="3"><h4 style="margin-bottom: 0em;">Address</h4></td></tr>
+                <tr style="height: 1em;"></tr>
+
+                <tr>
+                    <td>
+                        <label for="address1" class="form-label">Address Line 1</label>
+                        <input id="address1" placeholder="Street, Apartment number, etc" class="form-control" value="@Model.Address1" name="Address1" />
+                    </td>
+                    <td>
+                        <label for="address2" class="form-label">Address Line 2</label>
+                        <input id="address2" class="form-control" value="@Model.Address2" name="Address2" />
+                    </td>
+                    <td>
+                        <label for="city" class="form-label">City</label>
+                        <input id="city" class="form-control" value="@Model.City" name="City" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="state" class="form-label">State</label>
+                        <input id="state" class="form-control" value="@Model.State" name="State" />
+                    </td>
+                    <td>
+                        <label for="country" class="form-label">Country</label>
+                        <input id="country" class="form-control" value="@Model.Country" name="Country" />
+                    </td>
+                    <td>
+                        <label for="pincode" class="form-label">Pincode</label>
+                        <input id="pincode" type="number" class="form-control" value="@Model.Pincode" name="Pincode" />
+                    </td>
+                </tr>
+
+                <tr style="height: 1em;"></tr>
+                <tr><td class="sideHeading" colspan="3"><h4 style="margin-bottom: 0em;">Highest Education</h4></td></tr>
+                <tr style="height: 1em;"></tr>
+
+                <tr>
+                    <td>
+                        <label for="degree" class="form-label">Degree</label>
+                        <input id="degree" class="form-control" value="@Model.Degree" name="Degree" />
+                    </td>
+                    <td>
+                        <label for="institution" class="form-label">Institution Name</label>
+                        <input id="institution" class="form-control" value="@Model.Institution" name="Institution" />
+                    </td>
+                    <td>
+                        <label for="yearCompleted" class="form-label">Year Completed (or estimated)</label>
+                        <input id="yearCompleted" type="number" class="form-control" value="@Model.YearCompleted" name="YearCompleted" />
+                    </td>
+                </tr>
+            </tbody>
         </table>
+
+        <div style ="display: flex; align-items: center; justify-content: center; padding-top: 2em;">
+            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+        </div>
     </form>
 </div>
+
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                The User data has been saved succesfully!!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.showModal != null && ViewBag.showModal == true)
+{
+  <p>Saved successfully</p>  
+}
+
+
+
+@if (ViewBag.showModal != null && ViewBag.showModal == true)
+{
+    Console.WriteLine("entered modal...");
+    <script>
+        console.log("Bootstrap Object:", window.bootstrap);
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap is not loaded!');
+        } else {
+            console.log('Bootstrap is loaded successfully!');
+        }
+        console.log("Triggering modal...");
+        var modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show()
+    </script>
+}
 
