@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dotNetProject.Models
 {
@@ -6,15 +8,30 @@ namespace dotNetProject.Models
     {
         [Column("user_id")]
         public int UserId {  get; set; }
+
         [Column("first_name")]
+        [BindProperty]
+        [Required(ErrorMessage = "First Name is required")]
+        [StringLength(25, ErrorMessage = "First Name cannot exceed 25 characters")]
         public string? FirstName { get; set; }
         [Column("middle_name")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage ="Middle name cannot exceed 30 characters")]
         public string? MiddleName { get; set; }
         [Column("last_name")]
+        [BindProperty]
+        [Required(ErrorMessage = "Last Name is required")]
+        [StringLength(25, ErrorMessage = "Last Name cannot exceed 25 characters")]
         public string? LastName { get; set;}
         [Column("email")]
+        [BindProperty]
+        [Required(ErrorMessage ="Email is required")]
+        [EmailAddress(ErrorMessage ="Plase enter a valid email address")]
         public string? Email { get; set; }
         [Column("phone")]
+        [BindProperty]
+        [Required(ErrorMessage = "Phone number is required")]
+        [Phone(ErrorMessage = "Please enter a valid phone number")]
         public string? Phone { get; set; }
         [Column("date_of_birth")]
         public DateOnly? DateOfBirth { get; set; }

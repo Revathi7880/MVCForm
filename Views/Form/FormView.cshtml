@@ -10,6 +10,7 @@
 <h1 style="text-align:center; padding-top: 0.5em;">USER CREATION</h1>
 <div class="mainDiv">
     <form asp-controller="Form" asp-action="InsertUser" method="POST">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <table class="nameTable">
             <thead>
 
@@ -21,14 +22,17 @@
                     <td>
                         <label for="firstName" class="form-label">First Name</label>
                         <input id="firstName" class="form-control" value="@Model.FirstName" name="FirstName" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="middleName" class="form-label">Middle Name</label>
                         <input id="middleName" class="form-control" value="@Model.MiddleName" name="MiddleName" />
+                        <span asp-validation-for="MiddleName" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="lastName" class="form-label">Last Name</label>
                         <input id="lastName" class="form-control" value="@Model.LastName" name="LastName" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </td>
                 </tr>
 
@@ -36,10 +40,12 @@
                     <td>
                         <label for="email" class="form-label">Email</label>
                         <input id="email" type="email" placeholder="name@example.com" class="form-control" value="@Model.Email" name="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="phone" class="form-label">Contact Number</label>
                         <input id="phone" class="form-control" placeholder="(xxx)-xxx-xxxx" value="@Model.Phone" name="Phone" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="dob" class="form-label">Date of Birth</label>
@@ -124,46 +130,36 @@
     </form>
 </div>
 
-
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<!-- User Creation Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="successModalLabel" >Success</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                The User data has been saved succesfully!!
+                User information has been successfully saved.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-@if (ViewBag.showModal != null && ViewBag.showModal == true)
-{
-  <p>Saved successfully</p>  
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script to trigger modal on page load -->
+@if (ViewBag.showModal != null && ViewBag.showModal) {
+<script>
+    $(document).ready(function () {
+        $('#successModal').modal('show');
+    });
+</script>
 }
 
-
-
-@if (ViewBag.showModal != null && ViewBag.showModal == true)
-{
-    Console.WriteLine("entered modal...");
-    <script>
-        console.log("Bootstrap Object:", window.bootstrap);
-        if (typeof bootstrap === 'undefined') {
-            console.error('Bootstrap is not loaded!');
-        } else {
-            console.log('Bootstrap is loaded successfully!');
-        }
-        console.log("Triggering modal...");
-        var modal = new bootstrap.Modal(document.getElementById('successModal'));
-        modal.show()
-    </script>
-}
 
