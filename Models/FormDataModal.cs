@@ -34,28 +34,51 @@ namespace dotNetProject.Models
         [Phone(ErrorMessage = "Please enter a valid phone number")]
         public string? Phone { get; set; }
         [Column("date_of_birth")]
-        public DateOnly? DateOfBirth { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Date of Birth is required")]
+        //[DataType(DataType.Date)]
+        public DateTime? DateOfBirth { get; set; }
         [Column("age")]
         public int? Age { get; set; }
+        [BindProperty]
+        [Required(ErrorMessage = "Nationality is required")]
+        [StringLength(30, ErrorMessage = "Nationality cannot exceed 30 characters")]
         [Column("nationality")]
         public string? Nationality {  get; set; }
+        [BindProperty]
         [Column("occupation")]
         public string? Occupation { get; set; }
+
         [Column("address1")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage = "Street address cannot exceed 30 characters")]
         public string? Address1 { get; set;}
+
         [Column("address2")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage = "Address Line 2 cannot exceed 30 characters")]
         public string? Address2 { get; set; }
         [Column("city")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage = "City cannot exceed 30 characters")]
         public string? City { get; set; }
         [Column("state")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage = "State cannot exceed 30 characters")]
         public string? State { get; set; }
         [Column("country")]
+        [BindProperty]
+        [StringLength(30, ErrorMessage = "Country cannot exceed 30 characters")]
         public string? Country { get; set; }
         [Column("pincode")]
         public string? Pincode { get; set; }
         [Column("degree")]
+        [BindProperty]
+        [StringLength(50, ErrorMessage = "Degree cannot exceed 50 characters")]
         public string? Degree { get; set; }
         [Column("institution")]
+        [BindProperty]
+        [StringLength(70, ErrorMessage = "Institution cannot exceed 70 characters")]
         public string? Institution { get; set; }
         [Column("year_completed")]
         public int? YearCompleted { get; set; }
