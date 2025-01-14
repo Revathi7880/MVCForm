@@ -66,6 +66,10 @@ namespace dotNetProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (formData.DateOfBirth.HasValue)
+                {
+                    formData.DateOfBirth = DateTime.SpecifyKind(formData.DateOfBirth.Value, DateTimeKind.Utc);
+                }
                 _context.UserData.Add(formData);
                 _context.SaveChanges();
 
