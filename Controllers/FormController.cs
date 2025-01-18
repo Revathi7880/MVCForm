@@ -68,7 +68,7 @@ namespace dotNetProject.Controllers
             {
                 if (formData.DateOfBirth.HasValue)
                 {
-                    formData.DateOfBirth = DateTime.SpecifyKind(formData.DateOfBirth.Value, DateTimeKind.Utc);
+                    formData.DateOfBirth = formData.DateOfBirth.Value.Date;
                 }
                 _context.UserData.Add(formData);
                 _context.SaveChanges();

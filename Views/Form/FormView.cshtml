@@ -21,17 +21,17 @@
                 <tr>
                     <td>
                         <label for="firstName" class="form-label">First Name</label>
-                        <input id="firstName" class="form-control" value="@Model.FirstName" name="FirstName" />
+                        <input id="firstName" class="form-control" asp-for="FirstName" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="middleName" class="form-label">Middle Name</label>
-                        <input id="middleName" class="form-control" value="@Model.MiddleName" name="MiddleName" />
+                        <input id="middleName" class="form-control" asp-for="MiddleName" />
                         <span asp-validation-for="MiddleName" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="lastName" class="form-label">Last Name</label>
-                        <input id="lastName" class="form-control" value="@Model.LastName" name="LastName" />
+                        <input id="lastName" class="form-control" asp-for="LastName" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </td>
                 </tr>
@@ -39,17 +39,17 @@
                 <tr>
                     <td>
                         <label for="email" class="form-label">Email</label>
-                        <input id="email" type="email" placeholder="name@example.com" class="form-control" value="@Model.Email" name="Email" />
+                        <input id="email" type="email" placeholder="name@example.com" class="form-control"asp-for="Email"/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="phone" class="form-label">Contact Number</label>
-                        <input id="phone" class="form-control" placeholder="(xxx)-xxx-xxxx" value="@Model.Phone" name="Phone" />
+                        <input id="phone" class="form-control" placeholder="(xxx)-xxx-xxxx" asp-for="Phone"/>
                         <span asp-validation-for="Phone" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="dob" class="form-label">Date of Birth</label>
-                        <input id="dob" type="date" class="form-control" asp-for="DateOfBirth" />
+                        <input id="dob" type="date" class="form-control" asp-for="DateOfBirth" max="@DateTime.Today.ToString("yyyy-MM-dd")" onchange="CalculateAge()"/>
                         <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                     </td>
                 </tr>
@@ -57,15 +57,16 @@
                 <tr>
                     <td>
                         <label for="age" class="form-label">Age</label>
-                        <input id="age" type="number" class="form-control" value="@Model.Age" name="Age" />
+                        <input id="age" type="number" class="form-control" asp-for="Age" readonly/>
+                        <span asp-validation-for="Age" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="nationality" class="form-label">Nationality</label>
-                        <input id="nationality" class="form-control" value="@Model.Nationality" name="Nationality" />
+                        <input id="nationality" class="form-control" asp-for="Nationality" />
+                        <span asp-validation-for="Nationality" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="occupation" class="form-label">Occupation</label>
-                        @* <input id="occupation" class="form-control" placeholder="Student, Software Develpoper, ..." value="@Model.Occupation" name="Occupation" /> *@
                         <select class="form-select" asp-for="Occupation">
                             <option value="Not Choosen">Not Selected</option>
                             <option value="Student">Student</option>
@@ -86,30 +87,36 @@
                 <tr>
                     <td>
                         <label for="address1" class="form-label">Street Address</label>
-                        <input id="address1" placeholder="Street, Apartment number, etc" class="form-control" value="@Model.Address1" name="Address1" />
+                        <input id="address1" placeholder="Street, Apartment number, etc" class="form-control" asp-for="Address1" />
+                        <span asp-validation-for="Address1" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="address2" class="form-label">Address Line 2</label>
-                        <input id="address2" class="form-control" value="@Model.Address2" name="Address2" />
+                        <input id="address2" class="form-control" asp-for="Address2" />
+                        <span asp-validation-for="Address2" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="city" class="form-label">City</label>
-                        <input id="city" class="form-control" value="@Model.City" name="City" />
+                        <input id="city" class="form-control" asp-for="City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
                         <label for="state" class="form-label">State</label>
-                        <input id="state" class="form-control" value="@Model.State" name="State" />
+                        <input id="state" class="form-control" asp-for="State" />
+                        <span asp-validation-for="State" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="country" class="form-label">Country</label>
-                        <input id="country" class="form-control" value="@Model.Country" name="Country" />
+                        <input id="country" class="form-control" asp-for="Country" />
+                        <span asp-validation-for="Country" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="pincode" class="form-label">Pincode</label>
-                        <input id="pincode" type="number" class="form-control" value="@Model.Pincode" name="Pincode" />
+                        <input id="pincode" type="number" class="form-control" asp-for="Pincode" />
+                        <span asp-validation-for="Pincode" class="text-danger"></span>
                     </td>
                 </tr>
 
@@ -120,15 +127,18 @@
                 <tr>
                     <td>
                         <label for="degree" class="form-label">Degree</label>
-                        <input id="degree" class="form-control" value="@Model.Degree" name="Degree" />
+                        <input id="degree" class="form-control" asp-for="Degree" />
+                        <span asp-validation-for="Degree" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="institution" class="form-label">Institution Name</label>
-                        <input id="institution" class="form-control" value="@Model.Institution" name="Institution" />
+                        <input id="institution" class="form-control" asp-for="Institution" />
+                        <span asp-validation-for="Institution" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="yearCompleted" class="form-label">Year Completed (or estimated)</label>
-                        <input id="yearCompleted" type="number" class="form-control" value="@Model.YearCompleted" name="YearCompleted" />
+                        <input id="yearCompleted" type="number" class="form-control" asp-for="YearCompleted" />
+                        <span asp-validation-for="YearCompleted" class="text-danger"></span>
                     </td>
                 </tr>
             </tbody>
@@ -142,10 +152,10 @@
 
 <!-- User Creation Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel" >Success</h5>
+                <h5 class="modal-title" id="successModalLabel">User Created Successfully</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -171,5 +181,28 @@
     });
 </script>
 }
+
+<script>
+    function CalculateAge() {
+        const dobDate = document.getElementById('dob');
+        const calAge = document.getElementById('age');
+        if (dobDate.value) {
+            const dob = new Date(dobDate.value);
+            const today = new Date();
+
+            let age = today.getFullYear() - dob.getFullYear();
+            const monthDiff = today.getMonth() - dob.getMonth();
+            const dayDiff = today.getDate() - dob.getDate();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+                age--;
+            }
+            calAge.value = age
+        }
+        else {
+            calAge.value = age = '';
+        }
+    }
+</script>
 
 
