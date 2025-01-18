@@ -33,12 +33,14 @@ namespace dotNetProject.Models
         [Required(ErrorMessage = "Phone number is required")]
         [Phone(ErrorMessage = "Please enter a valid phone number")]
         public string? Phone { get; set; }
-        [Column("date_of_birth")]
+        [Column("date_of_birth", TypeName ="date")]
         [BindProperty]
         [Required(ErrorMessage = "Date of Birth is required")]
-        //[DataType(DataType.Date)]
         public DateTime? DateOfBirth { get; set; }
+        
         [Column("age")]
+        [BindProperty]
+        [Range(18,int.MaxValue, ErrorMessage = "Age must be 18 or older")]
         public int? Age { get; set; }
         [BindProperty]
         [Required(ErrorMessage = "Nationality is required")]
@@ -51,12 +53,12 @@ namespace dotNetProject.Models
 
         [Column("address1")]
         [BindProperty]
-        [StringLength(30, ErrorMessage = "Street address cannot exceed 30 characters")]
+        [StringLength(50, ErrorMessage = "Street address cannot exceed 30 characters")]
         public string? Address1 { get; set;}
 
         [Column("address2")]
         [BindProperty]
-        [StringLength(30, ErrorMessage = "Address Line 2 cannot exceed 30 characters")]
+        [StringLength(50, ErrorMessage = "Address Line 2 cannot exceed 30 characters")]
         public string? Address2 { get; set; }
         [Column("city")]
         [BindProperty]
