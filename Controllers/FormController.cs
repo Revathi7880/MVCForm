@@ -58,6 +58,11 @@ namespace dotNetProject.Controllers
                 return View(FormData);
         }
 
+        public IActionResult OperationView()
+        {
+            return View();
+        }
+
         // POST method for inserting data into database
         // Triggered when 'submit' is cliced in 'create user' page
         // Form/InsertUser POST method

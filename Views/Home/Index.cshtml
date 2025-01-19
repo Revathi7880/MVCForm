@@ -3,7 +3,32 @@
 }
 
 <div class="text-center">
-    
+    <h1 class="display-2" style="margin-top: 0.3em;">User Managment</h1>
+    <div style="display: flex; align-items: center; justify-content: center;margin-top: 6em;">
+
+        <a asp-controller="Form" asp-action="FormView" class="text-decoration-none">
+        <div class="card" style="width: 18rem; margin-right:8em;">
+            <img src="/images/addUser.png" class="card-img-top optionsImg" alt="...">
+            <div class="card-body" style="padding: 0;">
+                <div class="btn btn-primary optionButton">Create User</div>
+            </div>
+        </div>
+        </a>
+
+        <a asp-controller="Form" asp-action="OperationView" class="text-decoration-none">
+        <div class="card" style="width: 18rem;">
+            <img src="/images/userOperations.png" class="card-img-top optionsImg" alt="...">
+            <div class="card-body" style="padding: 0;">
+                <div class="btn btn-primary optionButton">User Operation</div>
+            </div>
+        </div>
+        </a>
+@*         <div class="d-grid gap-2 col-5 mx-auto">
+            <button class="btn btn-primary" type="button" style="height: 4em;">Button</button>
+            <button class="btn btn-primary" type="button" style="margin-top: 4em; height: 4em;">Button</button>
+        </div> *@
+    </div>
+
 </div>
 
 
