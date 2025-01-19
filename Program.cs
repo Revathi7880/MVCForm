@@ -31,12 +31,12 @@ namespace dotNetProject
 
             app.UseAuthorization();
 
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
             //app.MapControllerRoute(
             //    name: "default",
             //    pattern: "{controller=Form}/{action=FormView}/{id?}");
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Form}/{action=FormView}/{id?}");
 
             app.Run();
         }
