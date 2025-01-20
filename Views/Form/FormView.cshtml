@@ -185,7 +185,7 @@
 <script>
     function CalculateAge() {
         const dobDate = document.getElementById('dob');
-        const calAge = document.getElementById('age');
+        let calAge = document.getElementById('age');
         if (dobDate.value) {
             const dob = new Date(dobDate.value);
             const today = new Date();

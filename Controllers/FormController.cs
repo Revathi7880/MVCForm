@@ -83,6 +83,63 @@ namespace dotNetProject.Controllers
             }
             return View("FormView", formData);
 
-        }   
+        }  
+        
+        public IActionResult SearchUser([FromBody] FormDataModal searchData)
+        {
+            var searchQuery = "SELECT * FROM public.form_data where 1=1";
+            if(!string.IsNullOrEmpty(searchData.FirstName))
+            {
+                searchQuery += $" AND first_name ILIKE '%{searchData.FirstName}%'";
+            }
+            if (!string.IsNullOrEmpty(searchData.LastName))
+            {
+                searchQuery += $" AND last_name ILIKE '%{searchData.LastName}%'";
+            }
+            if (!string.IsNullOrEmpty(searchData.Email))
+            {
+                searchQuery += $" AND email ILIKE '%{searchData.Email}%'";
+            }
+            if (searchData.Age > 0)
+            {
+                searchQuery += $" AND age = {searchData.Age}";
+            }
+            if (!string.IsNullOrEmpty(searchData.Nationality))
+            {
+                searchQuery += $" AND nationality ILIKE '%{searchData.Nationality}%'";
+            }
+            if (!string.IsNullOrEmpty(searchData.Occupation))
+            {
+                searchQuery += $" AND occupation = '{searchData.Occupation}'";
+            }
+            Console.WriteLine(searchQuery);
+            string connectionString = "Host=localhost;port=5432;Database=form_data;Username=form_data;Password=form_data";
+            var users = new List<FormDataModal>();
+
+            using(var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var command = new NpgsqlCommand(searchQuery, conn))
+                {
+                    using(var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            users.Add(new FormDataModal
+                            {
+                                UserId = reader.GetInt32(0),
+                                FirstName = reader.GetString(1),
+                                LastName = reader.GetString(3),
+                                Email = reader.GetString(4),
+                                Nationality = reader.GetString(8),
+                                Occupation = reader.GetString(9),
+                            });
+                        }
+                    }
+                }
+            }
+            return Json(users);
+            //return View("OperationView", searchData);
+        }
     }
 }

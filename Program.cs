@@ -37,6 +37,9 @@ namespace dotNetProject
             //app.MapControllerRoute(
             //    name: "default",
             //    pattern: "{controller=Form}/{action=FormView}/{id?}");
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{controller=Form}/{action=OperationView}/{id?}");
 
             app.Run();
         }
