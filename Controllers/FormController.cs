@@ -16,48 +16,13 @@ namespace dotNetProject.Controllers
             _context = context;
         }
 
+        //Controller action for displaying and empty 'create user' page
         public IActionResult FormView()
         {
-            var FormData = new FormDataModal();
-
-            //string connectionString = "Host=localhost;port=5432;Database=form_data;Username=form_data;Password=form_data";
-            //FormDataModal? users = null;
-
-            //using (NpgsqlConnection conn = new(connectionString))
-            //{
-            //    conn.Open();
-            //    Console.WriteLine("connection is Open");
-            //    string sqlQuery = "SELECT * FROM public.user_data ORDER BY user_id ASC LIMIT 1;";
-            //    NpgsqlCommand cmd = new(sqlQuery, conn);
-            //    NpgsqlDataReader reader = cmd.ExecuteReader();
-
-            //    if (reader.HasRows)
-            //    {
-            //        Console.WriteLine("There are rows");
-
-            //        while (reader.Read())
-            //        {
-            //            users = new FormDataModal
-            //            {
-            //                UserId = reader.GetInt32(0),
-            //                FirsName = reader.GetString(1),
-            //                MiddleName = reader.GetString(2),
-            //                LastName = reader.GetString(3),
-            //                Email = reader.GetString(4),
-            //                Phone = reader.GetString(5),
-            //                Age = reader.GetInt32(6)
-            //            };
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("No rows found.");
-            //    }
-            //}
-
-                return View(FormData);
+            return View();
         }
 
+        //Controller action to display the user list page with empty filters
         public IActionResult OperationView()
         {
             return View();
@@ -66,7 +31,6 @@ namespace dotNetProject.Controllers
         // POST method for inserting data into database
         // Triggered when 'submit' is cliced in 'create user' page
         // Form/InsertUser POST method
-
         public IActionResult InsertUser(FormDataModal formData)
         {
             if (ModelState.IsValid)
@@ -83,8 +47,11 @@ namespace dotNetProject.Controllers
             }
             return View("FormView", formData);
 
-        }  
-        
+        }
+
+        // POST method for searching data in database using user entered filter data
+        // Triggered when 'submit' is cliced in 'User List' page
+        // Form/SearchUser POST method
         public IActionResult SearchUser([FromBody] FormDataModal searchData)
         {
             var searchQuery = "SELECT * FROM public.form_data where 1=1";
@@ -129,10 +96,23 @@ namespace dotNetProject.Controllers
                             {
                                 UserId = reader.GetInt32(0),
                                 FirstName = reader.GetString(1),
+                                MiddleName = !reader.IsDBNull(2)? reader.GetString(2): string.Empty,
                                 LastName = reader.GetString(3),
                                 Email = reader.GetString(4),
+                                Phone = reader.GetString(5),
+                                DateOfBirth = reader.GetDateTime(6),
+                                Age = reader.GetInt32(7),
                                 Nationality = reader.GetString(8),
-                                Occupation = reader.GetString(9),
+                                Occupation = !reader.IsDBNull(9)? reader.GetString(9): string.Empty,
+                                Address1 = !reader.IsDBNull(10)? reader.GetString(10): string.Empty,
+                                Address2 = !reader.IsDBNull(11) ? reader.GetString(1) : string.Empty,
+                                City = !reader.IsDBNull(12) ? reader.GetString(12) : string.Empty,
+                                State = !reader.IsDBNull(13) ? reader.GetString(13) : string.Empty,
+                                Country = !reader.IsDBNull(14) ? reader.GetString(14) : string.Empty,
+                                Pincode = !reader.IsDBNull(15) ? reader.GetString(15) : string.Empty,
+                                Degree = !reader.IsDBNull(16) ? reader.GetString(16) : string.Empty,
+                                Institution = !reader.IsDBNull(17) ? reader.GetString(17) : string.Empty,
+                                YearCompleted = !reader.IsDBNull(18)? reader.GetInt32(18) : 0
                             });
                         }
                     }

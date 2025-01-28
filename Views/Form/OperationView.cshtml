@@ -55,7 +55,7 @@
 
     <div style="margin: 1em 1em 0 0;">
         <p id="noResult" class="p" style="display: none; color: red;">No results found, please modify the filters!!</p>
-        <table id="searchTable" class="table table-striped table-bordered" style="margin: auto; display: none;">
+        <table id="searchTable" class="table table-striped table-bordered" style="margin: auto; display: none; text-align: center;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -72,66 +72,27 @@
         </table>
     </div>
 </div>
+
+<!-- Modal to show user details -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h2 class="modal-title w-100" id="modalTitle"></h2>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/js/Form.js"></script>
 
-<script>
-    function sendFields() {
-        const fields = {
-            firstName: document.getElementById("firstName").value.trim(),
-            lastName: document.getElementById("lastName").value.trim(),
-            email: document.getElementById("email").value.trim(),
-            age: document.getElementById("age").value.trim(),
-            nationality: document.getElementById("nationality").value.trim(),
-            occupation: document.getElementById("occupation").value.trim(),
-        };
 
-        let nonEmptyFields = {};
-        for (const key in fields) {
-            if (fields[key] && fields[key] != "none") {
-                nonEmptyFields[key] = fields[key];
-            }
-        }
-
-        $.ajax({
-            url: "/Form/SearchUser",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(nonEmptyFields),
-            success: function (response) {
-                if (response.length > 0) {
-                    console.log(response);
-                    populateTable(response);
-                }
-                else {
-                    document.getElementById("noResult").style.display = "block";
-                    document.getElementById("searchTable").style.display = "none";
-                }
-            },
-            error: function (error) {
-                console.log("error", error);
-            }
-        });
-    }
-
-    function populateTable(users)
-    {
-        document.getElementById("noResult").style.display = "none";
-        document.getElementById("searchTable").style.display = "table";
-        const tableBody = document.querySelector("#searchTable tbody");
-        tableBody.innerHTML = "";
-
-        users.forEach(user => {
-            const row = `
-            <tr>
-            <td>${user.userId}</td>
-            <td>${user.firstName}</td>
-            <td>${user.lastName}</td>
-            <td>${user.nationality}</td>
-            <td>${user.occupation}</td>
-            </tr>
-            `;
-            tableBody.insertAdjacentHTML("beforeend", row);
-        });
-    }
-</script>
