@@ -40,6 +40,7 @@ namespace dotNetProject.Models
         
         [Column("age")]
         [BindProperty]
+        [Required(ErrorMessage = "Age is required")]
         [Range(18,int.MaxValue, ErrorMessage = "Age must be 18 or older")]
         public int? Age { get; set; }
         [BindProperty]
