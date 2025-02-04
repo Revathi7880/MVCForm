@@ -9,7 +9,7 @@
 
 <h1 class="display-4" style="text-align:center; padding-top: 0.3em;">User Creation</h1>
 <div class="mainDiv">
-    <form asp-controller="Form" asp-action="InsertUser" method="POST">
+    <form id="userData" asp-controller="Form" asp-action="InsertUser" method="POST">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <table class="nameTable">
             <thead>
@@ -62,12 +62,12 @@
                     </td>
                     <td>
                         <label for="nationality" class="form-label">Nationality</label>
-                        <input id="nationality" class="form-control" asp-for="Nationality" />
+                        <input id="nationality" class="form-control" asp-for="Nationality"/>
                         <span asp-validation-for="Nationality" class="text-danger"></span>
                     </td>
                     <td>
                         <label for="occupation" class="form-label">Occupation</label>
-                        <select class="form-select" asp-for="Occupation">
+                        <select id="occupation" class="form-select" asp-for="Occupation">
                             <option value="Not Choosen">Not Selected</option>
                             <option value="Student">Student</option>
                             <option value="Corporate">Coporate</option>
@@ -115,7 +115,7 @@
                     </td>
                     <td>
                         <label for="pincode" class="form-label">Pincode</label>
-                        <input id="pincode" type="number" class="form-control" asp-for="Pincode" />
+                        <input id="pincode" type="number" class="form-control" asp-for="Pincode"/>
                         <span asp-validation-for="Pincode" class="text-danger"></span>
                     </td>
                 </tr>
@@ -145,7 +145,14 @@
         </table>
 
         <div style ="display: flex; align-items: center; justify-content: center; padding-top: 2em;">
-            <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+            @if (ViewBag.action != "delete")
+            {
+                <button class="btn btn-primary btn-lg" type="submit" id="submitButton">Submit</button>
+            }
+            @if (ViewBag.action == "delete")
+            {
+                <button class="btn btn-danger" type="button" id="deleteButton" data-user="@Model.UserId" onclick="confirmDelete(this)"> Delete</button>
+            }
         </div>
     </form>
 </div>
@@ -170,9 +177,51 @@
     </div>
 </div>
 
+<!--User deletion confirmation modal-->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to <strong>delete</strong> user with <strong id ="deleteUserId"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button class="btn btn-danger" type="button" id="confirmationButton" onclick="deleteUserById(this)"> Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--User deletion modal-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">User Delete Successfully</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="location.reload()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                User information has been deleted successfully.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="location.reload()">Close</button>
+                <a type="button" class="btn btn-primary" asp-controller="Home" asp-action="Index">Home</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <!-- Script to trigger modal on page load -->
 @if (ViewBag.showModal != null && ViewBag.showModal) {
 <script>
@@ -182,27 +231,27 @@
 </script>
 }
 
-<script>
-    function CalculateAge() {
-        const dobDate = document.getElementById('dob');
-        let calAge = document.getElementById('age');
-        if (dobDate.value) {
-            const dob = new Date(dobDate.value);
-            const today = new Date();
+@if (ViewBag.action != null && ViewBag.action == "delete")
+{
+    <script>
+        document.getElementById("submitButton").style.display = "none";
+    </script>
+}
 
-            let age = today.getFullYear() - dob.getFullYear();
-            const monthDiff = today.getMonth() - dob.getMonth();
-            const dayDiff = today.getDate() - dob.getDate();
-
-            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
-                age--;
+@if (ViewBag.readOnly != null && ViewBag.readOnly)
+{
+    <script>
+        document.querySelectorAll("#userData select, #userData input, #userData button").forEach(element => {
+            if (element.id === "occupation" || element.id === "submitButton") {
+                element.disabled = true;
             }
-            calAge.value = age
-        }
-        else {
-            calAge.value = age = '';
-        }
-    }
-</script>
+            else { 
+                element.readOnly = true; 
+                }
+            });
+    </script>
+}
+
+
 
 

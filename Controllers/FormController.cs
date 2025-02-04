@@ -1,7 +1,10 @@
 ﻿using dotNetProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.SqlServer.Server;
 using Npgsql;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace dotNetProject.Controllers
 {
@@ -19,13 +22,29 @@ namespace dotNetProject.Controllers
         //Controller action for displaying and empty 'create user' page
         public IActionResult FormView()
         {
-            return View();
+            if (TempData["UserData"] != null)
+            {
+                var userDataJson = TempData["UserData"].ToString();
+                var UserData = JsonSerializer.Deserialize<FormDataModal>(userDataJson);
+                ViewBag.readOnly = true;
+                ViewBag.action = TempData["ActionItem"];
+                return View(UserData);
+            }
+            ViewBag.action = "create";
+            return View(); 
         }
 
         //Controller action to display the user list page with empty filters
         public IActionResult OperationView()
         {
             return View();
+        }
+
+        public IActionResult UpdateDeleteView([FromBody] FormDataModal user, [FromQuery] string actionItem)
+        {
+            TempData["UserData"] = JsonSerializer.Serialize(user);
+            TempData["ActionItem"] = actionItem;
+            return Json(new { success = true, redirectUrl = Url.Action("FormView")}); 
         }
 
         // POST method for inserting data into database
@@ -43,6 +62,7 @@ namespace dotNetProject.Controllers
                 _context.SaveChanges();
 
                 ViewBag.showModal = true;
+                ViewBag.readOnly = true;
                 return View("FormView", formData);
             }
             return View("FormView", formData);
@@ -79,7 +99,6 @@ namespace dotNetProject.Controllers
             {
                 searchQuery += $" AND occupation = '{searchData.Occupation}'";
             }
-            Console.WriteLine(searchQuery);
             string connectionString = "Host=localhost;port=5432;Database=form_data;Username=form_data;Password=form_data";
             var users = new List<FormDataModal>();
 
@@ -121,5 +140,21 @@ namespace dotNetProject.Controllers
             return Json(users);
             //return View("OperationView", searchData);
         }
+
+        public IActionResult DeleteUser([FromQuery] string userId)
+        {
+            int id = Int32.Parse(userId);
+            var user = _context.UserData.Find(id);
+            if (user == null)
+            {
+                return NotFound(new { success = false, message = "User Not Found" });
+            }
+
+            _context.UserData.Remove(user);
+            _context.SaveChanges();
+
+            return Json(new { success = true, message = "user deleted successfully" });
+        }
+
     }
 }

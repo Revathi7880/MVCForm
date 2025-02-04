@@ -56,8 +56,8 @@ function populateTable(users) {
             <td>
                 <div class="btn-group" role="group" aria-label="Basic example">
                   <button type="button" class="btn btn-primary" data-user="${userEncoded}" onclick="viewModal(this)">View</button>
-                  <button type="button" class="btn btn-warning" onclick="userOperation(user.userId, 'delete')">Update</button>
-                  <button type="button" class="btn btn-danger">Delete</button>
+                  <button type="button" class="btn btn-warning">Update</button>
+                  <button type="button" class="btn btn-danger" data-user="${userEncoded}" onclick="userOperation(this, 'delete')">Delete</button>
                 </div>
             </td>
             </tr>
@@ -150,6 +150,63 @@ function viewModal(button) {
     });
 }
 
-function userOperation(userId, action) {
+function userOperation(button, action) {
+    var userDetails = decodeURIComponent(button.getAttribute("data-user"));
+    $.ajax({
+        url: "/Form/UpdateDeleteView?actionItem=" + encodeURIComponent(action),
+        type: "POST",
+        contentType: "application/json",
+        data: userDetails,
+        success: function (response) {
+            window.location.href = response.redirectUrl;
+        },
+        error: function (error) {
+            console.log("error", error);
+        }
+    });
+}
 
+function CalculateAge() {
+    const dobDate = document.getElementById('dob');
+    let calAge = document.getElementById('age');
+    if (dobDate.value) {
+        const dob = new Date(dobDate.value);
+        const today = new Date();
+
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        const dayDiff = today.getDate() - dob.getDate();
+
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+        calAge.value = age
+    }
+    else {
+        calAge.value = age = '';
+    }
+}
+
+function deleteUserById(button) {
+    userId = button.getAttribute("data-user");
+
+    $("#deleteConfirmationModal").modal("hide");
+
+    $.ajax({
+        url: "/Form/DeleteUser?userId=" + encodeURIComponent(userId),
+        type: "DELETE",
+        success: function (response) {
+            $("#deleteModal").modal('show');
+    },
+        error: function (error) {
+            console.error("Error deleting user: ", error);
+        }
+    });
+}
+
+function confirmDelete(button) {
+    userId = button.getAttribute("data-user");
+    $("#deleteUserId").text("ID - "+ userId);
+    $("#confirmationButton").attr("data-user", userId);
+    $("#deleteConfirmationModal").modal("show");
 }
